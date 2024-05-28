@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import scrolledtext
 from tkinter import font as tkfont
 
-
 class NumberDescriptionApp:
     def __init__(self, master):
         self.master = master
@@ -45,6 +44,8 @@ class NumberDescriptionApp:
     def describe_number(self):
         try:
             number = int(self.number_entry.get())
+            if abs(number) > 1_000_000_000:
+                raise ValueError("Number out of range. Please enter a number between -1,000,000,000 and 1,000,000,000.")
             self.description_text.config(state="normal")
             self.description_text.delete(1.0, tk.END)
             descriptions = [
@@ -56,37 +57,33 @@ class NumberDescriptionApp:
                 f"Positive: {self.is_positive(number)}, Negative: {self.is_negative(number)}, Zero: {self.is_zero(number)}",
                 f"Integer: {self.is_integer(number)}, Decimal: Not Applicable, Fraction: Not Applicable",
                 f"Rational: {self.is_rational(number)}, Irrational: {self.is_irrational(number)}",
-                f"Real: {self.is_real(number)}, Imaginary: {self.is_imaginary(number)}, Complex: {self.is_complex(number)}",
+                f"Real: {self.is_real(number)}, Imaginary: Not Applicable, Complex: Not Applicable",
                 f"The distance of the number from zero on the number line: {self.absolute_value(number)}",
-                "Scientific Notation: Not Applicable",
-                f"Numbers that can be multiplied together to get the original number: {self.factors(number)}",
-                f"Numbers that the original number can be divided by without leaving a remainder: {self.multiples(number)}",
-                f"Whether the number can be divided by another number without leaving a remainder: {self.divisibility(number)}",
-                f"The result of multiplying a number by itself: {self.powers(number)}",
-                f"The inverse operation of raising a number to a given power: {self.roots(number)}",
-                "Percentage: Not Applicable",
-                "Decimal Places: Not Applicable",
-                f"The number flipped upside down: {self.reciprocal(number)}",
-                f"An expression containing a root: {self.surd(number)}",
-                f"A number in the Fibonacci sequence: {self.is_fibonacci(number)}",
-                f"A number that is the reciprocal of the arithmetic mean of the reciprocals of a set of numbers: {self.is_harmonic(number)}",
-                f"A number equal to the sum of its proper divisors: {self.is_perfect(number)}",
-                f"A number for which the sum of its proper divisors is less than or greater than the number itself, respectively: {self.deficiency(number)}",
-                "Lucky Number: True",
-                f"A prime number that is one less than a power of two: {self.is_mersenne_prime(number)}",
-                "Friendly Number: Not Applicable",
-                f"The ratio between the sum of the proper divisors of a number and the number itself: {self.abundancy_index(number)}",
-                f"The sum of the proper divisors of a number: {self.aliquot_sum(number)}",
-                f"A number that can be expressed as the sum of two positive cubes in two different ways: {self.is_taxicab_number(number)}",
-                f"An n-digit number that is the sum of the nth powers of its digits: {self.is_narcissistic(number)}",
+                f"Scientific Notation: {self.scientific_notation(number)}",
+                f"Factors: {self.factors(number)}",
+                f"Multiples (1-10): {self.multiples(number)}",
+                f"Divisibility: {self.divisibility(number)}",
+                f"Powers: {self.powers(number)}",
+                f"Roots: {self.roots(number)}",
+                f"Reciprocal: {self.reciprocal(number)}",
+                f"Surd: {self.surd(number)}",
+                f"Fibonacci: {self.is_fibonacci(number)}",
+                f"Perfect Number: {self.is_perfect(number)}",
+                f"Deficiency: {self.deficiency(number)}",
+                f"Mersenne Prime: {self.is_mersenne_prime(number)}",
+                f"Abundancy Index: {self.abundancy_index(number)}",
+                f"Aliquot Sum: {self.aliquot_sum(number)}",
+                f"Narcissistic: {self.is_narcissistic(number)}",
             ]
+            if abs(number) <= 10_000_000:
+                descriptions.append(f"Taxicab Number: {self.is_taxicab_number(number)}")
             for desc in descriptions:
                 self.description_text.insert(tk.END, desc + "\n\n")
             self.description_text.config(state="disabled")
-        except ValueError:
+        except ValueError as e:
             self.description_text.config(state="normal")
             self.description_text.delete(1.0, tk.END)
-            self.description_text.insert(tk.END, "Please enter a valid integer.")
+            self.description_text.insert(tk.END, str(e))
             self.description_text.config(state="disabled")
 
     def ordinal(self, num):
@@ -98,39 +95,11 @@ class NumberDescriptionApp:
 
     def number_to_words(self, num):
         under_20 = [
-            "Zero",
-            "One",
-            "Two",
-            "Three",
-            "Four",
-            "Five",
-            "Six",
-            "Seven",
-            "Eight",
-            "Nine",
-            "Ten",
-            "Eleven",
-            "Twelve",
-            "Thirteen",
-            "Fourteen",
-            "Fifteen",
-            "Sixteen",
-            "Seventeen",
-            "Eighteen",
-            "Nineteen",
+            "Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven",
+            "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen",
+            "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"
         ]
-        tens = [
-            "",
-            "",
-            "Twenty",
-            "Thirty",
-            "Forty",
-            "Fifty",
-            "Sixty",
-            "Seventy",
-            "Eighty",
-            "Ninety",
-        ]
+        tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"]
         above_100 = {100: "Hundred", 1000: "Thousand", 1000000: "Million", 1000000000: "Billion"}
 
         if num < 20:
@@ -199,24 +168,24 @@ class NumberDescriptionApp:
     def absolute_value(self, num):
         return abs(num)
 
+    def scientific_notation(self, num):
+        return f"{num:.2e}"
+
     def factors(self, num):
         factors_list = []
-        for i in range(1, num + 1):
+        for i in range(1, int(num ** 0.5) + 1):
             if num % i == 0:
                 factors_list.append(i)
-        return factors_list
+                if i != num // i:
+                    factors_list.append(num // i)
+        return sorted(factors_list)
 
     def multiples(self, num):
-        multiples_list = []
-        for i in range(1, 11):
-            multiples_list.append(num * i)
+        multiples_list = [num * i for i in range(1, 11)]
         return multiples_list
 
     def divisibility(self, num):
-        divisibility_list = []
-        for i in range(2, num):
-            if num % i == 0:
-                divisibility_list.append(i)
+        divisibility_list = [i for i in range(2, num) if num % i == 0]
         return divisibility_list
 
     def powers(self, num):
@@ -245,83 +214,55 @@ class NumberDescriptionApp:
 
         return is_perfect_square(5 * num ** 2 + 4) or is_perfect_square(5 * num ** 2 - 4)
 
-    def is_harmonic(self, num):
-        return num == 1
-
     def is_perfect(self, num):
-        if num < 2:
+        if num < 1:
             return False
-        factors_sum = sum(self.factors(num)[:-1])
-        return factors_sum == num
+        return sum(self.factors(num)[:-1]) == num
 
     def deficiency(self, num):
-        factors_sum = sum(self.factors(num)[:-1])
-        if factors_sum < num:
-            return f"Deficient: {factors_sum}"
-        elif factors_sum > num:
-            return f"Abundant: {factors_sum}"
-        else:
-            return "Perfect"
+        if num < 1:
+            return "Undefined"
+        return sum(self.factors(num)[:-1]) - num
 
     def is_mersenne_prime(self, num):
-        def is_prime(x):
-            if x < 2:
-                return False
-            for i in range(2, int(x ** 0.5) + 1):
-                if x % i == 0:
-                    return False
-            return True
-
-        p = 0
-        while True:
-            if is_prime(2 ** p - 1):
-                if 2 ** p - 1 == num:
-                    return True
-                elif 2 ** p - 1 > num:
-                    return False
-            p += 1
+        if num < 2:
+            return False
+        m = num + 1
+        return (m & (m - 1)) == 0 and self.is_prime(num)
 
     def abundancy_index(self, num):
-        factors_sum = sum(self.factors(num)[:-1])
-        return factors_sum / num
+        if num == 0:
+            return "Undefined"
+        return sum(self.factors(num)) / num
 
     def aliquot_sum(self, num):
         return sum(self.factors(num)[:-1])
 
-    def is_taxicab_number(self, num):
-        def find_taxicab_number():
-            n = 2
-            while True:
-                found = {}
-                for a in range(1, n):
-                    for b in range(a, n):
-                        result = a ** 3 + b ** 3
-                        if result in found:
-                            found[result].append((a, b))
-                            if len(found[result]) == 2:
-                                return result, found[result]
-                        else:
-                            found[result] = [(a, b)]
-                n += 1
-
-        result, pairs = find_taxicab_number()
-        return num in pairs
-
     def is_narcissistic(self, num):
         num_str = str(num)
-        power = len(num_str)
-        return num == sum(int(x) ** power for x in num_str)
+        num_len = len(num_str)
+        return num == sum(int(digit) ** num_len for digit in num_str)
 
+    def is_taxicab_number(self, num):
+        if abs(num) > 10_000_000:
+            return "Calculation skipped for large number"
+        count = 0
+        for x in range(1, int(num ** (1 / 3)) + 1):
+            for y in range(x, int(num ** (1 / 3)) + 1):
+                if x ** 3 + y ** 3 == num:
+                    count += 1
+                    if count > 1:
+                        return True
+        return False
 
 def main():
     root = tk.Tk()
     app = NumberDescriptionApp(root)
     root.mainloop()
 
-
 if __name__ == "__main__":
     main()
-    
+
 #Made By: Mohamaed
 #Special thanks to Asser, Ezz, and Adam
 #This code is licensed under the MIT License.
