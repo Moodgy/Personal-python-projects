@@ -4,6 +4,7 @@ import os
 
 def create_notepad_on_desktop():
     
+    #Add your Desktop Directory here.
     desktop_path = r'YOUR/DESKTOP/DIRECTORY'
     
     
