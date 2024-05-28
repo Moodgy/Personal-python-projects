@@ -1,7 +1,7 @@
 user_input = input("Enter your text: ")
 commentlen = len(user_input)
 bad_wordschecker = False
-bad_words = ['funk', 'spit', 'beach']  # List of bad words
+bad_words = ['funk', 'spit', 'beach']  # List of bad words. You can add remove or replace the words in this list for your needs.
 
 def check_for_bad_words(input_text):
     for word in bad_words:
