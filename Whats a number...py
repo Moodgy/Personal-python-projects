@@ -10,7 +10,7 @@ class NumberDescriptionApp:
         self.master.geometry("600x400")
         self.master.configure(bg="#f0f0f0")
 
-        self.custom_font = tkfont.Font(family="Comic Sans", size=12)
+        self.custom_font = tkfont.Font(family="Comic Sans MS", size=12)
 
         self.number_label = tk.Label(
             self.master, text="Enter a number:", font=self.custom_font, bg="#f0f0f0"
