@@ -4,7 +4,7 @@ import os
 
 def create_notepad_on_desktop():
     
-    desktop_path = r'C:\Users\hp\OneDrive\Desktop'
+    desktop_path = r'YOUR/DESKTOP/DIRECTORY'
     
     
     notepad_name = input("Enter the name of the Notepad file (without extension): ") + ".txt"
