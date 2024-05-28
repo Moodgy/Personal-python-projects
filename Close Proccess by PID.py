@@ -1,4 +1,4 @@
-import psutil     # Removed line 3-10, because it crashes the app.
+import psutil     # Removed line 3-10, because it crashes the whole thing.
 
 # def list_all_processes():
 #     print("Listing all running processes:")
