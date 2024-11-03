@@ -2,7 +2,6 @@ import time as t
 import json
 import os
 
-# ANSI color codes
 red = "\033[91m"
 green = "\033[92m"
 yellow = "\033[33m"
@@ -11,11 +10,9 @@ reset = "\033[0m"
 white = "\033[37m"
 bright_white = "\033[97m"
 bold = "\033[1m"
-
-# Initialize variables
 high_scores_file = 'high_scores.json'
 
-# Load high scores from file if it exists
+# Load high scores file if it even exists
 if os.path.exists(high_scores_file):
     with open(high_scores_file, 'r') as f:
         high_scores = json.load(f)
@@ -109,7 +106,7 @@ def play_game():
 
     choice = choose_country()
 
-    # Automatically play the second country after the first
+    # plays the second country automatically
     if choice == '1':
         total_score += canada_colonization()
         print(f"{reset}{bold}\nNow switching to Egypt.")
