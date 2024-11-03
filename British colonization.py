@@ -13,7 +13,6 @@ bright_white = "\033[97m"
 bold = "\033[1m"
 
 # Initialize variables
-run_count = 0
 high_scores_file = 'high_scores.json'
 
 # Load high scores from file if it exists
@@ -22,8 +21,6 @@ if os.path.exists(high_scores_file):
         high_scores = json.load(f)
 else:
     high_scores = {}
-
-    
 
 def intro():
     player_name = input(f"{reset}{bold}Enter your name: ")
@@ -110,22 +107,20 @@ def play_game():
     player_name = intro()
     total_score = 0
 
-    while True:
-        choice = choose_country()
+    choice = choose_country()
 
-        # Call the appropriate function based on the player's choice
-        if choice == '1':
-            total_score += canada_colonization()
-        elif choice == '2':
-            total_score += egypt_colonization()
-        else:
-            print(f"{bold}{red}Invalid choice, please restart the game.{reset}")
-            continue
-
-        # Ask if the player wants to continue with the other country
-        play_again = input(f"{reset}{bold}Would you like to learn about the other country? (yes/no): ").strip().lower()
-        if play_again != 'yes':
-            break
+    # Automatically play the second country after the first
+    if choice == '1':
+        total_score += canada_colonization()
+        print(f"{reset}{bold}\nNow switching to Egypt.")
+        total_score += egypt_colonization()
+    elif choice == '2':
+        total_score += egypt_colonization()
+        print(f"{reset}{bold}\nNow switching to Canada.")
+        total_score += canada_colonization()
+    else:
+        print(f"{bold}{red}Invalid choice, please restart the game.{reset}")
+        return
 
     print(f"{reset}{bold}\nCongratulations {player_name}! Your total score is: {total_score}")
     
@@ -137,6 +132,8 @@ play_game()
 print(f"{blue}{bold}Credits")
 t.sleep(1)
 print(f"{yellow}{bold}Mohamed")
+t.sleep(1)
+print(f"{yellow}{bold}Hatem")
 t.sleep(1)
 print(f"{yellow}{bold}OpenAI Company")
 t.sleep(1)
