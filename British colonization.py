@@ -1,5 +1,8 @@
 #Welcome to my game once you run the script it will create a high-scores.json file
-#that will store all high scores. If you want to exit full screen use the "esc" on your keyboard.
+#that will store all you're high scores. If you want to exit full screen use the "esc" key on your keyboard.
+#If you want to reset the highscores you can delete the high-scores.json file, and the script will automatically
+#create a new blank json file to reset all highscores.
+
 
 
 # -------------------------------------START OF CODE. DO NOT CHANGE ANYTHING --------------------------------------------------------------
@@ -20,7 +23,7 @@ else:
     high_scores = {}
 
 
-#setting fonts and colors and stuff like thag
+#setting fonts and colors and stuff like dang
 
 
 TITLE_FONT = ("Comic Sans MS", 24, "bold")
