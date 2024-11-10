@@ -5,7 +5,7 @@
 
 
 
-# -------------------------------------START OF CODE. DO NOT CHANGE ANYTHING --------------------------------------------------------------
+# ------------------------------------- START OF CODE. DO NOT CHANGE ANYTHING --------------------------------------------------------------
 
 import tkinter as tk
 from tkinter import messagebox, font
@@ -23,7 +23,7 @@ else:
     high_scores = {}
 
 
-#setting fonts and colors and stuff like dang
+#setting fonts and colors and stuff like gang
 
 
 TITLE_FONT = ("Comic Sans MS", 24, "bold")
