@@ -28,7 +28,7 @@ else:
 
 TITLE_FONT = ("Comic Sans MS", 24, "bold")
 TEXT_FONT = ("Comic Sans MS", 24)
-BUTTON_FONT = ("Comic Sans MS", 14, "bold")
+BUTTON_FONT = ("Comic Sans MS", 24, "bold")
 BG_COLOR = "#1e1e1e"  
 FG_COLOR = "#ffffff"  
 BUTTON_COLOR = "#333333"
