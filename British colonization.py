@@ -23,7 +23,7 @@ else:
     high_scores = {}
 
 
-#setting fonts and colors and stuff like gang
+#setting fonts and colors and stuff like that gang
 
 
 TITLE_FONT = ("Comic Sans MS", 24, "bold")
