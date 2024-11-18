@@ -11,7 +11,7 @@ import tkinter as tk
 from tkinter import messagebox, font
 import json
 import os
-import time
+import time as t
 
 
 high_scores_file = 'high_scores.json'
@@ -64,7 +64,7 @@ class ColonizationGameApp:
         for i in range(len(text) + 1):
             label.config(text=text[:i])
             label.update()
-            time.sleep(delay / 1000)
+            t.sleep(delay / 1000)
 
     
     def intro_screen(self):
@@ -97,7 +97,7 @@ class ColonizationGameApp:
     def start_game(self):
         self.player_name = self.name_entry.get()
         if not self.player_name:
-            messagebox.showwarning("Input Required", "Please enter your name!")
+            messagebox.showwarning("No name detected.", "Please enter your name!")
             return
         self.country_index = 0
         self.total_score = 0
