@@ -14,6 +14,7 @@ import os
 import time as t
 
 
+
 high_scores_file = 'high_scores.json'
 
 if os.path.exists(high_scores_file):
@@ -34,12 +35,17 @@ FG_COLOR = "#ffffff"
 BUTTON_COLOR = "#333333"
 HIGHLIGHT_COLOR = "#4caf50"
 CIRCLE_COLOR = "#4caf50"
+green = "\033[92m"
+red = "\033[91m"
+bright_white = "\033[97m"
+
+reset = "\033[0m"
 
 
 class ColonizationGameApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("British Colonization Learning Game")
+        self.root.title(f"British Colonization Learning Game")
         self.root.configure(bg=BG_COLOR)
         self.root.attributes("-fullscreen", True)  
         self.root.bind("<Escape>", self.toggle_fullscreen)  # a way to exit fullscreen 
@@ -69,19 +75,19 @@ class ColonizationGameApp:
     
     def intro_screen(self):
         self.clear_screen()
-        title = tk.Label(self.root, text="British Colonization Learning Game", font=TITLE_FONT, bg=BG_COLOR, fg=HIGHLIGHT_COLOR)
+        title = tk.Label(self.root, text=f"British Colonization Learning Game", font=TITLE_FONT, bg=BG_COLOR, fg=HIGHLIGHT_COLOR)
         title.pack(pady=30)
 
         
-        name_label = tk.Label(self.root, text="Enter your name:", font=TEXT_FONT, bg=BG_COLOR, fg=FG_COLOR)
+        name_label = tk.Label(self.root, text=f"Enter your name:", font=TEXT_FONT, bg=BG_COLOR, fg=FG_COLOR)
         name_label.pack()
         self.name_entry = tk.Entry(self.root, font=TEXT_FONT, bg=BUTTON_COLOR, fg=FG_COLOR, insertbackground=FG_COLOR)
         self.name_entry.pack(pady=10)
 
         
-        self.create_button("Start Game", self.start_game).pack(pady=15)
-        self.create_button("View High Scores", self.show_high_scores).pack(pady=10)
-        self.create_button("Exit", self.root.quit).pack(pady=10)
+        self.create_button(f"Start Game", self.start_game).pack(pady=15)
+        self.create_button(f"View High Scores", self.show_high_scores).pack(pady=10)
+        self.create_button(f"Exit", self.root.quit).pack(pady=10)
 
     
            # the main menu
@@ -114,19 +120,19 @@ class ColonizationGameApp:
     def get_questions(self, country):
         if country == "Canada":
             return [                #questions for canada
-                ("In which year did Britain officially gain control of Canada?", "1763", ["1763", "1867"]),
-                ("What was the significance of the Hudson's Bay Company?", "It was a British trading company that controlled large parts of Canada.", ["It was a British trading company that controlled large parts of Canada.", "It was the first Canadian political party."]),
-                ("Which event led to the British military victory over the French in Canada?", "The Battle of Quebec in 1759", ["The Battle of Quebec in 1759", "The American Revolutionary War"]),
-                ("What was the main purpose of the Royal Proclamation of 1763?", "To organize new lands and manage relationships with Indigenous peoples.", ["To organize new lands and manage relationships with Indigenous peoples.", "To declare independence from Britain."]),
-                ("What was the significance of the Confederation of Canada in 1867?", "It united the provinces under a federal system while remaining part of the British Empire.", ["It granted Canada complete independence from Britain.", "It united the provinces under a federal system while remaining part of the British Empire."])
+                (f"In which year did Britain officially gain control of Canada?", "1763", ["1763", "1867"]),
+                (f"What was the significance of the Hudson's Bay Company?", "It was a British trading company that controlled large parts of Canada.", ["It was a British trading company that controlled large parts of Canada.", "It was the first Canadian political party."]),
+                (f"Which event led to the British military victory over the French in Canada?", "The Battle of Quebec in 1759", ["The Battle of Quebec in 1759", "The American Revolutionary War"]),
+                (f"What was the main purpose of the Royal Proclamation of 1763?", "To organize new lands and manage relationships with Indigenous peoples.", ["To organize new lands and manage relationships with Indigenous peoples.", "To declare independence from Britain."]),
+                (f"What was the significance of the Confederation of Canada in 1867?", "It united the provinces under a federal system while remaining part of the British Empire.", ["It granted Canada complete independence from Britain.", "It united the provinces under a federal system while remaining part of the British Empire."])
             ]
         elif country == "Egypt":
             return [                       #questions for egypt
-                ("When did Britain occupy Egypt?", "1882", ["1882", "1922"]),
-                ("What was Britain's primary interest in Egypt?", "The Suez Canal for trade routes.", ["The Nile River for irrigation.", "The Suez Canal for trade routes."]),
-                ("How did Egypt's strategic importance increase during World War I?", "It was a major supply base and control point for the Allies.", ["It was a major supply base and control point for the Allies.", "It remained neutral and uninvolved in the war."]),
-                ("What was the result of the 1919 Egyptian Revolution against British rule?", "It led to Egypt gaining nominal independence in 1922 but British control remained in key areas.", ["Egypt gained full independence immediately.", "It led to Egypt gaining nominal independence in 1922 but British control remained in key areas."]),
-                ("What was the impact of the 1952 Egyptian Revolution on British presence in Egypt?", "It marked the end of British influence and led to the establishment of the Republic of Egypt.", ["It marked the end of British influence and led to the establishment of the Republic of Egypt.", "It resulted in closer cooperation between Britain and Egypt."])
+                (f"When did Britain occupy Egypt?", "1882", ["1882", "1922"]),
+                (f"What was Britain's primary interest in Egypt?", "The Suez Canal for trade routes.", ["The Nile River for irrigation.", "The Suez Canal for trade routes."]),
+                (f"How did Egypt's strategic importance increase during World War I?", "It was a major supply base and control point for the Allies.", ["It was a major supply base and control point for the Allies.", "It remained neutral and uninvolved in the war."]),
+                (f"What was the result of the 1919 Egyptian Revolution against British rule?", "It led to Egypt gaining nominal independence in 1922 but British control remained in key areas.", ["Egypt gained full independence immediately.", "It led to Egypt gaining nominal independence in 1922 but British control remained in key areas."]),
+                (f"What was the impact of the 1952 Egyptian Revolution on British presence in Egypt?", "It marked the end of British influence and led to the establishment of the Republic of Egypt.", ["It marked the end of British influence and led to the establishment of the Republic of Egypt.", "It resulted in closer cooperation between Britain and Egypt."])
             ]
 
     
@@ -155,7 +161,7 @@ class ColonizationGameApp:
             option_button.bind("<Enter>", lambda e: self.create_circle(option_frame))
             option_button.bind("<Leave>", lambda e: self.remove_circle(option_frame))
 
-        submit_button = self.create_button("Submit Answer", self.check_answer)
+        submit_button = self.create_button(f"Submit Answer", self.check_answer)
         submit_button.pack(pady=15)
 
     
@@ -199,7 +205,7 @@ class ColonizationGameApp:
         score_label.pack(pady=30)
 
         self.update_high_scores()
-        self.create_button("Back to Main Menu", self.intro_screen).pack(pady=20)
+        self.create_button(f"Back to Main Menu", self.intro_screen).pack(pady=20)
 
     
     def update_high_scores(self):
@@ -215,18 +221,18 @@ class ColonizationGameApp:
     
     def show_high_scores(self):
         self.clear_screen()
-        title = tk.Label(self.root, text="High Scores", font=TITLE_FONT, bg=BG_COLOR, fg=HIGHLIGHT_COLOR)
+        title = tk.Label(self.root, text=f"High Scores", font=TITLE_FONT, bg=BG_COLOR, fg=HIGHLIGHT_COLOR)
         title.pack(pady=30)
 
         if high_scores:
             for name, score in high_scores.items():
-                score_label = tk.Label(self.root, text=f"{name}: {score}", font=TEXT_FONT, bg=BG_COLOR, fg=FG_COLOR)
+                score_label = tk.Label(self.root, text=f"{name}: {score} / 10", font=TEXT_FONT, bg=BG_COLOR, fg=FG_COLOR)
                 score_label.pack(pady=5)
         else:
-            no_scores_label = tk.Label(self.root, text="No high scores yet!", font=TEXT_FONT, bg=BG_COLOR, fg=FG_COLOR)
+            no_scores_label = tk.Label(self.root, text=f"No high scores yet!", font=TEXT_FONT, bg=BG_COLOR, fg=FG_COLOR)
             no_scores_label.pack(pady=5)
 
-        self.create_button("Back to Main Menu", self.intro_screen).pack(pady=20)
+        self.create_button(f"Back to Main Menu", self.intro_screen).pack(pady=20)
 
     
     def clear_screen(self):
